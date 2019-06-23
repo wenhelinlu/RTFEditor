@@ -1,0 +1,208 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:RTFEditor="clr-namespace:RTFEditor"
+    xmlns:local="clr-namespace:RTFEditor"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    mc:Ignorable="d"
+	x:Class="RTFEditor.RTFBox"
+	x:Name="RTFEditor"
+	d:DesignWidth="600" d:DesignHeight="600" Loaded="RTFEditor_Loaded">
+
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="FontListKlasse" d:IsDataSource="True" ObjectType="{x:Type RTFEditor:FontList}" />
+        <ObjectDataProvider x:Key="FontHeightKlasse" d:IsDataSource="True" ObjectType="{x:Type RTFEditor:FontHeight}" />
+        <Style x:Key="ToolBarImage"
+               TargetType="{x:Type Image}">
+            <Setter Property="Width"
+                    Value="16" />
+            <Setter Property="Height"
+                    Value="16" />
+            <Setter Property="Stretch" Value="Uniform" />
+        </Style>
+        <Style x:Key="ViewTypeToggle"
+               TargetType="{x:Type RadioButton}">
+            <Setter Property="Margin"
+                    Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Border x:Name="Bd"
+                                Padding="4,1"
+                                BorderBrush="Transparent"
+                                BorderThickness="1">
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="#333399FF"
+                                        TargetName="Bd" />
+                                <Setter Property="BorderBrush"
+                                        Value="#FF3399FF"
+                                        TargetName="Bd" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ToggleContextMenu"
+               TargetType="{x:Type ContextMenu}">
+            <Setter Property="Background"
+                    Value="#FFF" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContextMenu}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ItemsPresenter Margin="{TemplateBinding Padding}"
+                                            SnapsToDevicePixels="true" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type MenuItem}">
+                                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                      ContentSource="Header"
+                                                      RecognizesAccessKey="False" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <ToolBar x:Name="ToolBarOben" DockPanel.Dock="Top">
+            <Button x:Name="ToolStripButtonOpen" Click="ToolStripButtonOpen_Click" Visibility="Collapsed">
+                <Image Source="Images\Open.png" Stretch="None" />
+            </Button>
+            <Button x:Name="ToolStripButtonPrint" Click="ToolStripButtonPrint_Click" Visibility="Collapsed">
+                <Image Source="Images\Print.png" Stretch="None" />
+            </Button>
+            <Separator />
+            <Button x:Name="ToolStripButtonCut" Command="ApplicationCommands.Cut" ToolTip="Cut">
+                <Image Source="Images\Cut.png" Stretch="None" />
+            </Button>
+            <Button x:Name="ToolStripButtonCopy" Command="ApplicationCommands.Copy" ToolTip="Copy">
+                <Image Source="Images\Copy.png" Stretch="None" />
+            </Button>
+            <Button x:Name="ToolStripButtonPaste" Command="ApplicationCommands.Paste" ToolTip="Paste">
+                <Image Source="Images\Paste.png" Stretch="None" />
+            </Button>
+            <Button x:Name="ToolStripButtonUndo" Command="ApplicationCommands.Undo" ToolTip="Undo">
+                <Image Source="Images\Undo.png" Stretch="None" />
+            </Button>
+            <Button x:Name="ToolStripButtonRedo" Command="ApplicationCommands.Redo" ToolTip="Redo">
+                <Image Source="Images\Redo.png" Stretch="None" />
+            </Button>
+            <Separator />
+            <ComboBox x:Name="Fonttype" ItemsSource="{Binding Mode=OneWay, Source={StaticResource FontListKlasse}}" DropDownClosed="Fonttype_DropDownClosed" />
+            <ComboBox x:Name="Fontheight" ItemsSource="{Binding Mode=OneWay, Source={StaticResource FontHeightKlasse}}"  DropDownClosed="Fontheight_DropDownClosed" />
+            <ToggleButton x:Name="ToolStripButtonBold" Command="EditingCommands.ToggleBold" ToolTip="Bold">
+                <Image Source="Images\Bold.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <ToggleButton x:Name="ToolStripButtonItalic" Command="EditingCommands.ToggleItalic" ToolTip="Italic">
+                <Image Source="Images\Italic.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <ToggleButton x:Name="ToolStripButtonUnderline" Command="EditingCommands.ToggleUnderline" ToolTip="Underline">
+                <Image Source="Images\Underline.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <ToggleButton x:Name="ToolStripButtonStrikeout" ToolTip="Strikeout" Click="ToolStripButtonStrikeout_Click">
+                <Image Source="Images\Strikeout.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <Separator />
+            <ToggleButton x:Name="ToggleFontColor" Click="ToggleFontColor_Click">
+                <ToggleButton.ContextMenu>
+                    <ContextMenu x:Name="FontColorContextMenu" Style="{StaticResource ToggleContextMenu}">
+                        <local:ColorPicker x:Name="FontColorPicker" />
+                        <!--<xctk:ColorPicker Name="cp" Grid.Column="1" Margin="161,377,563,33" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" ></xctk:ColorPicker>-->
+                    </ContextMenu>
+                </ToggleButton.ContextMenu>
+                <Image Source="Images\fontcolor.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <ToggleButton x:Name="ToggleBackColor" Click="ToggleBackColor_Click">
+                <ToggleButton.ContextMenu>
+                    <ContextMenu x:Name="BackColorContextMenu" Style="{StaticResource ToggleContextMenu}">
+                        <local:ColorPicker x:Name="BackColorPicker" />
+                        <!--<xctk:ColorPicker Name="cp" Grid.Column="1" Margin="161,377,563,33" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" ></xctk:ColorPicker>-->
+                    </ContextMenu>
+                </ToggleButton.ContextMenu>
+                <Image Source="Images\linecolor.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <Button x:Name="ToolStripButtonTextcolor" Visibility="Collapsed" Click="ToolStripButtonTextcolor_Click">
+                <Image Source="Images\Textcolor.png" Stretch="None" />
+            </Button>
+            <Button x:Name="ToolStripButtonBackcolor" Visibility="Collapsed" Click="ToolStripButtonBackcolor_Click">
+                <Image Source="Images\Backcolor.png" Stretch="None" />
+            </Button>
+            <Separator />
+            <ToggleButton x:Name="ToolStripButtonAlignLeft" Command="EditingCommands.AlignLeft" ToolTip="Align Left" Click="ToolStripButtonAlignLeft_Click">
+                <Image Source="Images\AlignLeft.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <ToggleButton x:Name="ToolStripButtonAlignCenter" Command="EditingCommands.AlignCenter" ToolTip="Align Center" Click="ToolStripButtonAlignCenter_Click">
+                <Image Source="Images\AlignCenter.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <ToggleButton x:Name="ToolStripButtonAlignRight" Command="EditingCommands.AlignRight" ToolTip="Align Right" Click="ToolStripButtonAlignRight_Click">
+                <Image Source="Images\AlignRight.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <Separator />
+            <Button x:Name="ToolStripButtonBulletList" Command="EditingCommands.ToggleBullets" ToolTip="Bullets">
+                <Image Source="Images\BulletList.png"  Style="{StaticResource ToolBarImage}" />
+            </Button>
+            <Button x:Name="ToolStripButtonNumbersList" Command="EditingCommands.ToggleNumbering" ToolTip="Numbers">
+                <Image Source="Images\NumbersList.png"  Style="{StaticResource ToolBarImage}" />
+            </Button>
+            <Separator />
+            <Button x:Name="ToolStripButtonIndent" Command="EditingCommands.IncreaseIndentation" ToolTip="Increase Indent">
+                <Image Source="Images\Indent.png"  Style="{StaticResource ToolBarImage}" />
+            </Button>
+            <Button x:Name="ToolStripButtonIndentDelete" Command="EditingCommands.DecreaseIndentation" ToolTip="Decrease Indent">
+                <Image Source="Images\IndentRemove.png"  Style="{StaticResource ToolBarImage}" />
+            </Button>
+            <Separator />
+            <ToggleButton x:Name="ToolStripButtonSubscript" ToolTip="Subscript" Click="ToolStripButtonSubscript_Click">
+                <Image Source="Images\Subscript.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+            <ToggleButton x:Name="ToolStripButtonSuperscript" ToolTip="Superscript" Click="ToolStripButtonSuperscript_Click">
+                <Image Source="Images\Superscript.png"  Style="{StaticResource ToolBarImage}" />
+            </ToggleButton>
+        </ToolBar>
+        <StatusBar x:Name="StatusBar" DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <Label x:Name="LabelZeileNr" Content="ZeileNr" BorderThickness="1" BorderBrush="DarkGray" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <Label x:Name="LabelSpalteNr" Content="SpalteNr" BorderThickness="1" BorderBrush="DarkGray" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <Label x:Name="LabelEinfg" Content="Einfg" BorderThickness="1" BorderBrush="DarkGray" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button Content="Html" Name="exporttohtml" Click="Exporttohtml_Click" />
+            </StatusBarItem>
+            <StatusBarItem DockPanel.Dock="Right" Width="100">
+                <Slider x:Name="SliderZoom" Grid.Column="1" Width="100" Ticks="1, 2, 3, 4, 5, 6, 7, 8, 9, 10" Value="1" Delay="100" Interval="5" TickPlacement="BottomRight" Minimum="1" Maximum="10" ValueChanged="SliderZoom_ValueChanged" HorizontalContentAlignment="Left" />
+            </StatusBarItem>
+        </StatusBar>
+        <RichTextBox x:Name="RichTextControl" SpellCheck.IsEnabled="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True" SelectionChanged="RichTextControl_SelectionChanged" TextChanged="RichTextControl_TextChanged" KeyDown="RichTextControl_KeyDown" KeyUp="RichTextControl_KeyUp">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="3" />
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+    </DockPanel>
+</UserControl>
