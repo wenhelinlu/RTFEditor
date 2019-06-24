@@ -9,7 +9,13 @@ namespace TestApp
 {
     public class MainViewModel : NotificationObject
     {
-        private string _text = @"";
+        private string _text = @"
+確認お願いします。
+ありがとうございます。
+以上宜しくお願い致します。
+ 
+HONG MOLD TECH
+徐知弘".Replace(Environment.NewLine, "<br>");
 
         public string Text
         {

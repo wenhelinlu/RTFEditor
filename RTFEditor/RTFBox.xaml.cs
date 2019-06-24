@@ -22,20 +22,7 @@ namespace RTFEditor
     /// </summary>
     public partial class RTFBox
     {
-        public static readonly DependencyProperty TextProperty =
-          DependencyProperty.Register("Text", typeof(string), typeof(RTFBox),
-          new PropertyMetadata(string.Empty));
-
-        public string Text
-        {
-            get { return GetValue(TextProperty) as string; }
-            set
-            {
-                SetValue(TextProperty, value);
-            }
-        }
-
-        #region BindingContent Dependency Property
+        #region BindingHtml Dependency Property
 
         private string myBindingContent = string.Empty;
 
@@ -74,7 +61,7 @@ namespace RTFEditor
             BindingHtml = htmlResult.Html;
         }
 
-        #endregion BindingContent Dependency Property
+        #endregion BindingHtml Dependency Property
 
         /// <summary>
         /// Konstruktor - initialisiert alle graphischen Komponenten

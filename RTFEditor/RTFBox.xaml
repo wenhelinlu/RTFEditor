@@ -198,7 +198,7 @@
             </StatusBarItem>
         </StatusBar>
         <RichTextBox x:Name="RichTextControl"
-                     SpellCheck.IsEnabled="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True" LostFocus="RichTextControl_LostFocus" SelectionChanged="RichTextControl_SelectionChanged" TextChanged="RichTextControl_TextChanged" KeyDown="RichTextControl_KeyDown" KeyUp="RichTextControl_KeyUp">
+                     SpellCheck.IsEnabled="False" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True" LostFocus="RichTextControl_LostFocus" SelectionChanged="RichTextControl_SelectionChanged" TextChanged="RichTextControl_TextChanged" KeyDown="RichTextControl_KeyDown" KeyUp="RichTextControl_KeyUp">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="3" />
