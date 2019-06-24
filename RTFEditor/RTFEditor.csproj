@@ -145,9 +145,9 @@
       <Project>{6813ECB1-B6B3-49F4-9070-9E4DFEF34FAE}</Project>
       <Name>ColorPicker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MarkupConverter\MarkupConverter.csproj">
-      <Project>{dc692379-518f-4241-9bba-4e3f4a9bce13}</Project>
-      <Name>MarkupConverter</Name>
+    <ProjectReference Include="..\Rtf2HtmlMod\Rtf2HtmlMod.csproj">
+      <Project>{b1f1a364-20bd-47a2-bbc9-3d022e065691}</Project>
+      <Name>Rtf2HtmlMod</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

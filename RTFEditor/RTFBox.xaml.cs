@@ -10,11 +10,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 using ColorPicker;
 using System.Runtime.InteropServices;
-using MarkupConverter;
+using Rtf2HtmlMod;
 
 namespace RTFEditor
 {
@@ -715,8 +714,11 @@ namespace RTFEditor
 
         private void Exporttohtml_Click(object sender, RoutedEventArgs e)
         {
-            IMarkupConverter markupConverter = new MarkupConverter.MarkupConverter();
-            string html = markupConverter.ConvertRtfToHtml(GetRTF());
+            string rtf = GetRTF();
+            var htmlOutput = @"D:\test21.html";
+            var contentUriPrefix = Path.GetFileNameWithoutExtension(htmlOutput);
+            var htmlResult = RtfToHtmlConverter.RtfToHtml(rtf, contentUriPrefix);
+            htmlResult.WriteToFile(htmlOutput);
         }
     }
 }
