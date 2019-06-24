@@ -3,7 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:rtf="clr-namespace:RTFEditor;assembly=RTFEditor"
     Title="Window1" Height="600" Width="800">
-    <DockPanel>
-        <rtf:RTFBox></rtf:RTFBox>
-    </DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <rtf:RTFBox  BindingHtml="{Binding Text, Mode=TwoWay}" />
+        <Border Grid.Row="1">
+            <Button Name="btn_test" Content="Test" Click="Btn_test_Click" />
+        </Border>
+    </Grid>
 </Window>

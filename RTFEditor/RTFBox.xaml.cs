@@ -22,6 +22,60 @@ namespace RTFEditor
     /// </summary>
     public partial class RTFBox
     {
+        public static readonly DependencyProperty TextProperty =
+          DependencyProperty.Register("Text", typeof(string), typeof(RTFBox),
+          new PropertyMetadata(string.Empty));
+
+        public string Text
+        {
+            get { return GetValue(TextProperty) as string; }
+            set
+            {
+                SetValue(TextProperty, value);
+            }
+        }
+
+        #region BindingContent Dependency Property
+
+        private string myBindingContent = string.Empty;
+
+        /// <summary>
+        /// 转换后的Html文本
+        /// </summary>
+        public string BindingHtml
+        {
+            get { return (string)GetValue(BindingHtmlProperty); }
+            set { SetValue(BindingHtmlProperty, value); }
+        }
+
+        public static readonly DependencyProperty BindingHtmlProperty =
+            DependencyProperty.Register("BindingHtml", typeof(string), typeof(RTFBox),
+                new FrameworkPropertyMetadata(string.Empty, new PropertyChangedCallback(OnBindingHtmlChanged)));
+
+        private static void OnBindingHtmlChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            RTFBox editor = (RTFBox)sender;
+
+            var v = (string)e.NewValue;
+            string rtf = MarkupConverter.HtmlToRtfConverter.ConvertHtmlToRtf(v);
+            editor.SetRTF(rtf);
+        }
+
+        private void NotifyBindingHtmlChanged()
+        {
+            //if (myBindingContent != this.ContentHtml)
+            //{
+            //    BindingContent = this.ContentHtml;
+            //}
+
+            //将rtf格式转换成html文本
+            var rtf = GetRTF();
+            var htmlResult = RtfToHtmlConverter.RtfToHtml(rtf);
+            BindingHtml = htmlResult.Html;
+        }
+
+        #endregion BindingContent Dependency Property
+
         /// <summary>
         /// Konstruktor - initialisiert alle graphischen Komponenten
         /// </summary>
@@ -719,6 +773,11 @@ namespace RTFEditor
             var contentUriPrefix = Path.GetFileNameWithoutExtension(htmlOutput);
             var htmlResult = RtfToHtmlConverter.RtfToHtml(rtf, contentUriPrefix);
             htmlResult.WriteToFile(htmlOutput);
+        }
+
+        private void RichTextControl_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(this.NotifyBindingHtmlChanged));
         }
     }
 }

@@ -5,10 +5,10 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:RTFEditor="clr-namespace:RTFEditor"
     xmlns:local="clr-namespace:RTFEditor"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:asis="clr-namespace:RTFEditor.AttachedProperties"
     mc:Ignorable="d"
 	x:Class="RTFEditor.RTFBox"
-	x:Name="RTFEditor"
+	x:Name="uxRichTextEditor"
 	d:DesignWidth="600" d:DesignHeight="600" Loaded="RTFEditor_Loaded">
 
     <UserControl.Resources>
@@ -180,7 +180,7 @@
                 <Image Source="Images\Superscript.png"  Style="{StaticResource ToolBarImage}" />
             </ToggleButton>
         </ToolBar>
-        <StatusBar x:Name="StatusBar" DockPanel.Dock="Bottom">
+        <StatusBar x:Name="StatusBar" DockPanel.Dock="Bottom" Visibility="Collapsed">
             <StatusBarItem>
                 <Label x:Name="LabelZeileNr" Content="ZeileNr" BorderThickness="1" BorderBrush="DarkGray" />
             </StatusBarItem>
@@ -197,7 +197,8 @@
                 <Slider x:Name="SliderZoom" Grid.Column="1" Width="100" Ticks="1, 2, 3, 4, 5, 6, 7, 8, 9, 10" Value="1" Delay="100" Interval="5" TickPlacement="BottomRight" Minimum="1" Maximum="10" ValueChanged="SliderZoom_ValueChanged" HorizontalContentAlignment="Left" />
             </StatusBarItem>
         </StatusBar>
-        <RichTextBox x:Name="RichTextControl" SpellCheck.IsEnabled="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True" SelectionChanged="RichTextControl_SelectionChanged" TextChanged="RichTextControl_TextChanged" KeyDown="RichTextControl_KeyDown" KeyUp="RichTextControl_KeyUp">
+        <RichTextBox x:Name="RichTextControl"
+                     SpellCheck.IsEnabled="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True" LostFocus="RichTextControl_LostFocus" SelectionChanged="RichTextControl_SelectionChanged" TextChanged="RichTextControl_TextChanged" KeyDown="RichTextControl_KeyDown" KeyUp="RichTextControl_KeyUp">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="3" />
