@@ -197,12 +197,13 @@
                 <Slider x:Name="SliderZoom" Grid.Column="1" Width="100" Ticks="1, 2, 3, 4, 5, 6, 7, 8, 9, 10" Value="1" Delay="100" Interval="5" TickPlacement="BottomRight" Minimum="1" Maximum="10" ValueChanged="SliderZoom_ValueChanged" HorizontalContentAlignment="Left" />
             </StatusBarItem>
         </StatusBar>
-        <RichTextBox x:Name="RichTextControl"
+        <RichTextBox x:Name="RichTextControl" FontSize="14"
                      SpellCheck.IsEnabled="False" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True" LostFocus="RichTextControl_LostFocus" SelectionChanged="RichTextControl_SelectionChanged" TextChanged="RichTextControl_TextChanged" KeyDown="RichTextControl_KeyDown" KeyUp="RichTextControl_KeyUp">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="3" />
                 </Style>
+                
             </RichTextBox.Resources>
         </RichTextBox>
     </DockPanel>

@@ -15,7 +15,7 @@ namespace TestApp
 以上宜しくお願い致します。
  
 HONG MOLD TECH
-徐知弘".Replace(Environment.NewLine, "<br>");
+徐知弘";
 
         public string Text
         {

@@ -8,7 +8,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <rtf:RTFBox  BindingHtml="{Binding Text, Mode=TwoWay}" />
+        <rtf:RTFBox  BindingHtml="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Border Grid.Row="1">
             <Button Name="btn_test" Content="Test" Click="Btn_test_Click" />
         </Border>

@@ -44,7 +44,7 @@ namespace RTFEditor
             RTFBox editor = (RTFBox)sender;
 
             var v = (string)e.NewValue;
-            string rtf = MarkupConverter.HtmlToRtfConverter.ConvertHtmlToRtf(v);
+            string rtf = MarkupConverter.HtmlToRtfConverter.ConvertHtmlToRtf(v.Replace(Environment.NewLine,"<p>"));
             editor.SetRTF(rtf);
         }
 
@@ -138,6 +138,7 @@ namespace RTFEditor
         {
             // Schrifttypen- und -größen-Initialisierung
             TextRange range = new TextRange(RichTextControl.Selection.Start, RichTextControl.Selection.End);
+
             Fonttype.SelectedValue = range.GetPropertyValue(FlowDocument.FontFamilyProperty).ToString();
             Fontheight.SelectedValue = range.GetPropertyValue(FlowDocument.FontSizeProperty).ToString();
 
