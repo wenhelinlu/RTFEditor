@@ -44,7 +44,7 @@ namespace RTFEditor
             RTFBox editor = (RTFBox)sender;
 
             var v = (string)e.NewValue;
-            string rtf = MarkupConverter.HtmlToRtfConverter.ConvertHtmlToRtf(v.Replace(Environment.NewLine,"<p>"));
+            string rtf = MarkupConverter.HtmlToRtfConverter.ConvertHtmlToRtf(v);
             editor.SetRTF(rtf);
         }
 
